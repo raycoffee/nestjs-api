@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Bookmark } from '../bookmark/bookmark.entity';
+
 
 @Entity()
 export class User {
@@ -22,4 +24,9 @@ export class User {
 
     @Column({ nullable: true })
     lastName: string
+
+    @OneToMany(() => Bookmark, (bookmark) => bookmark.user, {
+        cascade: true
+    })
+    bookmarks: Bookmark[]
 }
