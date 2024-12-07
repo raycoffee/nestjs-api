@@ -1,7 +1,7 @@
 import { Injectable, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { User } from "src/user/user.entity";
+import { User } from "../user/user.entity";
 import { AuthDto } from "./dto";
 import * as argon from "argon2"
 import { JwtService } from "@nestjs/jwt";
@@ -41,8 +41,11 @@ export class AuthService {
     }
 
     async login(dto: AuthDto) {
+
         const { email, password } = dto
+
         const user = await this.userRepository.findOne({ where: { email } })
+
         if (!user) {
             throw new ForbiddenException('Credentials incorrect');
         }
@@ -63,7 +66,7 @@ export class AuthService {
         }
 
         const token = await this.jwt.signAsync(payload, {
-            expiresIn: "15m",
+            expiresIn: "12h",
             secret: this.config.get('JWT_SECRET')
         })
 

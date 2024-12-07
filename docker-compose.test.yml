@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  test-db:
+    image: postgres:15
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: ray
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: nestjs_api_test
